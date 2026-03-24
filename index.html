@@ -22,6 +22,7 @@
             --text-primary: #1A1A1A;
             --text-secondary: #6B6B6B;
             --text-light: #9A9A9A;
+            --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         * {
@@ -63,14 +64,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.4s ease;
+            transition: all 0.5s var(--ease-out);
+            background: transparent;
         }
 
         nav.scrolled {
-            background: rgba(250, 248, 245, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(44, 74, 62, 0.08);
+            background: rgba(250, 248, 245, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(44, 74, 62, 0.06);
             padding: 0.875rem 2rem;
         }
 
@@ -84,16 +86,16 @@
         }
 
         .nav-cta {
-            font-size: 0.8125rem;
+            font-size: 0.75rem;
             font-weight: 500;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--green);
             text-decoration: none;
             padding: 0.625rem 1.5rem;
             border: 1.5px solid var(--green);
             border-radius: 100px;
-            transition: all 0.3s ease;
+            transition: all 0.15s ease;
         }
 
         .nav-cta:hover {
@@ -147,13 +149,13 @@
             background: var(--white);
             border: 1px solid rgba(44, 74, 62, 0.1);
             border-radius: 100px;
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             font-weight: 500;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
             color: var(--green);
             margin-bottom: 2.5rem;
-            animation: fadeInUp 0.8s ease-out;
+            animation: fadeInUp 0.8s var(--ease-out);
         }
 
         .hero-badge::before {
@@ -172,7 +174,7 @@
             letter-spacing: 0.06em;
             line-height: 1;
             margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease-out 0.1s both;
+            animation: fadeInUp 0.8s var(--ease-out) 0.1s both;
         }
 
         .hero-tagline {
@@ -181,8 +183,28 @@
             font-weight: 400;
             font-style: italic;
             color: var(--gold);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s var(--ease-out) 0.2s both;
+        }
+
+        .hero-trust {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            font-size: 0.6875rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-light);
             margin-bottom: 3rem;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
+            animation: fadeInUp 0.8s var(--ease-out) 0.25s both;
+        }
+
+        .hero-trust::before {
+            content: '◆';
+            font-size: 0.4rem;
+            color: var(--gold);
+            vertical-align: middle;
         }
 
         .hero-description {
@@ -192,7 +214,7 @@
             color: var(--text-secondary);
             font-weight: 300;
             margin-bottom: 3.5rem;
-            animation: fadeInUp 0.8s ease-out 0.3s both;
+            animation: fadeInUp 0.8s var(--ease-out) 0.3s both;
         }
 
         .hero-cta {
@@ -208,8 +230,8 @@
             text-transform: uppercase;
             padding: 1rem 2.5rem;
             border-radius: 100px;
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
+            transition: all 0.15s ease;
+            animation: fadeInUp 0.8s var(--ease-out) 0.4s both;
         }
 
         .hero-cta:hover {
@@ -221,50 +243,74 @@
         .hero-cta svg {
             width: 16px;
             height: 16px;
-            transition: transform 0.3s ease;
+            transition: transform 0.15s ease;
         }
 
         .hero-cta:hover svg {
             transform: translateX(3px);
         }
 
-        .hero-scroll {
+        /* ── Scroll indicator ────────────────────── */
+
+        .scroll-indicator {
             position: absolute;
-            bottom: 2.5rem;
+            bottom: 3rem;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-light);
-            font-size: 0.6875rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            text-decoration: none;
-            animation: fadeInUp 0.8s ease-out 0.6s both;
+            width: 1px;
+            height: 48px;
+            background: rgba(154, 154, 154, 0.25);
+            animation: fadeInUp 0.8s var(--ease-out) 0.6s both;
         }
 
-        .hero-scroll .line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--text-light), transparent);
-            animation: scrollPulse 2s ease-in-out infinite;
+        .scroll-indicator::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -1.5px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: scrollDot 2.4s var(--ease-out) infinite;
+        }
+
+        @keyframes scrollDot {
+            0% { top: 0; opacity: 1; }
+            70% { top: 44px; opacity: 1; }
+            100% { top: 44px; opacity: 0; }
         }
 
         /* ── Section shared ──────────────────────── */
 
         section {
-            padding: 7rem 2rem;
+            padding: 10rem 2rem;
         }
 
         .section-label {
+            font-family: 'Inter', sans-serif;
             font-size: 0.6875rem;
-            font-weight: 600;
-            letter-spacing: 0.2em;
+            font-weight: 500;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--gold);
-            margin-bottom: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-label::after {
+            content: '';
+            display: block;
+            width: 2rem;
+            height: 1px;
+            background: var(--gold-light);
+            margin-top: 0.75rem;
+        }
+
+        /* Centre the label line when parent is centred */
+        .header .section-label::after,
+        .waitlist .section-label::after {
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .section-heading {
@@ -295,7 +341,7 @@
 
         .how-it-works .header {
             text-align: center;
-            margin-bottom: 5rem;
+            margin-bottom: 6rem;
         }
 
         .how-it-works .header .section-subheading {
@@ -377,7 +423,7 @@
 
         .experiences .header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
         }
 
         .experiences .header .section-subheading {
@@ -396,7 +442,7 @@
             border-radius: 16px;
             padding: 2.25rem 1.5rem;
             text-align: center;
-            transition: all 0.35s ease;
+            transition: all 0.15s ease;
             cursor: default;
         }
 
@@ -468,6 +514,10 @@
             color: var(--gold-light);
         }
 
+        .waitlist .section-label::after {
+            background: rgba(212, 186, 136, 0.4);
+        }
+
         .waitlist .section-heading {
             color: var(--white);
             margin-bottom: 1rem;
@@ -496,7 +546,7 @@
             font-size: 0.9375rem;
             font-weight: 400;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.15s ease;
         }
 
         .waitlist-form input::placeholder {
@@ -520,7 +570,7 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.15s ease;
             white-space: nowrap;
         }
 
@@ -537,7 +587,7 @@
         }
 
         .waitlist-success {
-            animation: fadeInUp 0.6s ease-out;
+            animation: fadeInUp 0.6s var(--ease-out);
         }
 
         .waitlist-success h3 {
@@ -598,7 +648,7 @@
             text-decoration: none;
             font-size: 0.8125rem;
             font-weight: 400;
-            transition: color 0.3s ease;
+            transition: color 0.15s ease;
         }
 
         .footer-links a:hover {
@@ -615,7 +665,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(24px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -623,15 +673,10 @@
             }
         }
 
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-
         .reveal {
             opacity: 0;
-            transform: translateY(32px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            transform: translateY(20px);
+            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
         }
 
         .reveal.visible {
@@ -642,6 +687,10 @@
         /* ── Mobile ──────────────────────────────── */
 
         @media (max-width: 900px) {
+            section {
+                padding: 7rem 2rem;
+            }
+
             .steps {
                 grid-template-columns: 1fr;
                 gap: 3rem;
@@ -715,6 +764,7 @@
         <div class="hero-badge">Launching 2026</div>
         <div class="hero-wordmark">LiLo</div>
         <div class="hero-tagline">The world's most curated wellness platform</div>
+        <div class="hero-trust">Every experience personally vetted by our team</div>
         <p class="hero-description">
             An AI-powered platform that finds the perfect luxury wellness retreat,
             urban wellness experience, or health practitioner — uniquely matched to you.
@@ -725,10 +775,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
             </svg>
         </a>
-        <a href="#how" class="hero-scroll">
-            Discover
-            <span class="line"></span>
-        </a>
+        <div class="scroll-indicator" aria-hidden="true"></div>
     </section>
 
     <!-- How It Works -->
@@ -743,7 +790,7 @@
                 </p>
             </div>
             <div class="steps">
-                <div class="step reveal">
+                <div class="step reveal" data-reveal-delay="0">
                     <div class="step-number">1</div>
                     <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
@@ -751,7 +798,7 @@
                     <h3>Tell LiLo what you need</h3>
                     <p>Share your goals, preferences, and constraints. Whether it's a weekend reset or a month-long transformation — we listen.</p>
                 </div>
-                <div class="step reveal">
+                <div class="step reveal" data-reveal-delay="80">
                     <div class="step-number">2</div>
                     <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
@@ -759,7 +806,7 @@
                     <h3>Get a curated shortlist</h3>
                     <p>Our AI matches you with hand-vetted experiences from our network. Every recommendation is editorially reviewed.</p>
                 </div>
-                <div class="step reveal">
+                <div class="step reveal" data-reveal-delay="160">
                     <div class="step-number">3</div>
                     <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 9v9.75" />
@@ -783,7 +830,7 @@
                 </p>
             </div>
             <div class="experience-grid">
-                <div class="experience-card reveal">
+                <div class="experience-card reveal" data-reveal-delay="0">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-2.247m0 0A8.966 8.966 0 0 1 3 12c0-1.264.26-2.467.73-3.558" />
@@ -792,7 +839,7 @@
                     <h4>Luxury Retreats</h4>
                     <p>Destination wellness</p>
                 </div>
-                <div class="experience-card reveal">
+                <div class="experience-card reveal" data-reveal-delay="60">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
@@ -801,7 +848,7 @@
                     <h4>Urban Wellness</h4>
                     <p>City-based experiences</p>
                 </div>
-                <div class="experience-card reveal">
+                <div class="experience-card reveal" data-reveal-delay="120">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -810,7 +857,7 @@
                     <h4>Longevity Clinics</h4>
                     <p>Science-led health</p>
                 </div>
-                <div class="experience-card reveal">
+                <div class="experience-card reveal" data-reveal-delay="180">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.048 8.287 8.287 0 0 0 9 9.6a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
@@ -819,7 +866,7 @@
                     <h4>Private Fitness</h4>
                     <p>Elite training</p>
                 </div>
-                <div class="experience-card reveal">
+                <div class="experience-card reveal" data-reveal-delay="240">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
@@ -841,8 +888,6 @@
                 We're building something special for people who take their
                 wellbeing seriously. Join the waitlist for early access.
             </p>
-            <!-- ⚠️  REPLACE_WITH_FORMSPREE_ID: Change mnjoaqpa below to your real Formspree form ID.
-                 Setup (2 min): Go to https://formspree.io → Sign up free → New Form → copy the 8-char ID from the endpoint URL. -->
             <div id="waitlist-container">
                 <form class="waitlist-form" id="waitlist-form">
                     <input type="email" name="email" placeholder="Your email address" required aria-label="Email address">
@@ -867,26 +912,27 @@
     </footer>
 
     <script>
-        // Navbar scroll effect
+        // Navbar — transparent on hero, frosted glass on scroll
         const nav = document.getElementById('nav');
         window.addEventListener('scroll', () => {
             nav.classList.toggle('scrolled', window.scrollY > 60);
         });
 
-        // Reveal on scroll
+        // Reveal on scroll — staggered children via data-reveal-delay
         const reveals = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
+                    const delay = parseInt(entry.target.dataset.revealDelay || '0', 10);
                     setTimeout(() => {
                         entry.target.classList.add('visible');
-                    }, i * 80);
-                    observer.unobserve(entry.target);
+                    }, delay);
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.12 });
 
-        reveals.forEach(el => observer.observe(el));
+        reveals.forEach(el => revealObserver.observe(el));
 
         // Waitlist form — submits to Formspree
         const waitlistForm = document.getElementById('waitlist-form');
@@ -898,12 +944,10 @@
             const input = waitlistForm.querySelector('input');
             const email = input.value;
 
-            // Disable form while submitting
             button.disabled = true;
-            button.textContent = 'Sending…';
+            button.textContent = 'Sending\u2026';
 
             try {
-                // ⚠️  REPLACE_WITH_FORMSPREE_ID: Change mnjoaqpa to your Formspree form ID
                 const res = await fetch('https://formspree.io/f/mnjoaqpa', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -913,8 +957,8 @@
                 if (res.ok) {
                     waitlistContainer.innerHTML = `
                         <div class="waitlist-success">
-                            <h3>You're in — we'll be in touch soon.</h3>
-                            <p>We'll let you know the moment LiLo is ready for you.</p>
+                            <h3>You\u2019re in \u2014 we\u2019ll be in touch soon.</h3>
+                            <p>We\u2019ll let you know the moment LiLo is ready for you.</p>
                         </div>`;
                 } else {
                     throw new Error('Form submission failed');
@@ -922,12 +966,11 @@
             } catch (err) {
                 button.disabled = false;
                 button.textContent = 'Join the Waitlist';
-                // Remove any existing error before adding a new one
                 const existing = waitlistContainer.querySelector('.waitlist-error');
                 if (existing) existing.remove();
                 const errorEl = document.createElement('p');
                 errorEl.className = 'waitlist-error';
-                errorEl.textContent = 'Something went wrong — please try again.';
+                errorEl.textContent = 'Something went wrong \u2014 please try again.';
                 waitlistContainer.appendChild(errorEl);
             }
         });
