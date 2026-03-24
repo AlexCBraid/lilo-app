@@ -721,6 +721,11 @@
         .lc-message-assistant .lc-bubble strong { color: var(--green-dark); font-weight: 600; }
         .lc-message-assistant .lc-bubble a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
         .lc-message-assistant .lc-bubble a:hover { color: var(--green-dark); }
+        .lc-message-assistant .lc-bubble p { margin: 0 0 0.4rem; }
+        .lc-message-assistant .lc-bubble p:last-child { margin-bottom: 0; }
+        .lc-message-assistant .lc-bubble ul,
+        .lc-message-assistant .lc-bubble ol { margin: 0.25rem 0 0.4rem 1.25rem; padding: 0; }
+        .lc-message-assistant .lc-bubble li { margin-bottom: 0.2rem; }
 
         .lc-message-user .lc-bubble {
             background: var(--green);
@@ -1082,6 +1087,8 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 </head>
 <body>
 
@@ -1399,13 +1406,20 @@
         const lcSend = document.getElementById('lc-send');
         const lcError = document.getElementById('lc-error');
 
+        // Configure marked for landing page chat
+        const lcRenderer = new marked.Renderer();
+        lcRenderer.link = function({ href, title, text }) {
+            const t = title ? ` title="${title}"` : '';
+            return `<a href="${href}"${t} target="_blank" rel="noopener noreferrer">${text}</a>`;
+        };
+        marked.setOptions({ renderer: lcRenderer, breaks: true, gfm: true });
+
         function lcRenderMd(text) {
-            let h = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-            h = h.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-            h = h.replace(/(^|[\s(])(https?:\/\/[^\s)<]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
-            h = h.replace(/\n/g, '<br>');
-            return h;
+            const raw = marked.parse(text);
+            return DOMPurify.sanitize(raw, {
+                ADD_ATTR: ['target', 'rel'],
+                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'code', 'pre']
+            });
         }
 
         function lcAppend(role, text) {

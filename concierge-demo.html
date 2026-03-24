@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
     <style>
         :root {
             --green: #2C4A3E;
@@ -132,6 +134,11 @@
         .message-assistant .message-bubble strong { color: var(--green-dark); font-weight: 600; }
         .message-assistant .message-bubble a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
         .message-assistant .message-bubble a:hover { color: var(--green-dark); }
+        .message-assistant .message-bubble p { margin: 0 0 0.5rem; }
+        .message-assistant .message-bubble p:last-child { margin-bottom: 0; }
+        .message-assistant .message-bubble ul,
+        .message-assistant .message-bubble ol { margin: 0.25rem 0 0.5rem 1.25rem; padding: 0; }
+        .message-assistant .message-bubble li { margin-bottom: 0.25rem; }
 
         .message-user .message-bubble {
             background: var(--green);
@@ -274,21 +281,20 @@
 
         chatInput.focus();
 
-        // Lightweight markdown: **bold**, [text](url), and newlines
+        // Configure marked for safe rendering with links opening in new tab
+        const renderer = new marked.Renderer();
+        renderer.link = function({ href, title, text }) {
+            const titleAttr = title ? ` title="${title}"` : '';
+            return `<a href="${href}"${titleAttr} target="_blank" rel="noopener noreferrer">${text}</a>`;
+        };
+        marked.setOptions({ renderer, breaks: true, gfm: true });
+
         function renderMarkdown(text) {
-            let html = text
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
-            // Bold
-            html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-            // Links
-            html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-            // Bare URLs
-            html = html.replace(/(^|[\s(])(https?:\/\/[^\s)<]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
-            // Line breaks
-            html = html.replace(/\n/g, '<br>');
-            return html;
+            const raw = marked.parse(text);
+            return DOMPurify.sanitize(raw, {
+                ADD_ATTR: ['target', 'rel'],
+                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'code', 'pre']
+            });
         }
 
         chatForm.addEventListener('submit', async (e) => {

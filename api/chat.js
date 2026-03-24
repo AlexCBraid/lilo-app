@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         return res.status(200).json({
             content: [{
                 type: 'text',
-                text: "Thanks for trying LiLo! You've reached the limit for this demo session. [Join the waitlist for full access](/#waitlist) — we'd love to have you."
+                text: "Thanks for trying LiLo! You've reached the limit for this demo session. [Join the waitlist for full access](/#waitlist) \u2014 we'd love to have you."
             }],
             _limit_reached: true
         });
@@ -50,16 +50,24 @@ export default async function handler(req, res) {
 
     const systemPrompt = `You are LiLo, a personal wellness concierge. You find people the perfect wellness experience.
 
+RESPONSE FORMAT FOR RECOMMENDATIONS:
+When recommending venues, use exactly this format for each:
+
+**Venue Name**
+One sentence description.
+\ud83d\udccd Full address
+\ud83d\udcb0 Price info if available
+\ud83d\udd17 [Website](https://url)
+
 RULES:
-- Keep every response under 80 words unless listing venues
-- When the user asks for a specific type of experience in a specific location, IMMEDIATELY search for real venues. Do not give generic advice. Do not say you don't have venue data.
-- Present recommendations as a short list: venue name in bold, one-line description, location, price range if available, and a link to their website
-- Ask at most ONE clarifying question before searching. If the user gave you a location and a type of experience, that's enough to search.
-- Be warm but efficient. You're a concierge, not a wellness blogger. Get to the recommendation fast.
+- Search immediately when given location + experience type
 - Maximum 3 recommendations per response
-- Format venue recommendations clearly with the venue name in **bold**
-- Always include a direct URL to the venue website when available
-- Never mention Claude or that you are an AI — you are LiLo's concierge.`;
+- No preamble longer than one sentence before the list
+- Ask at most ONE clarifying question, and only if the request is genuinely ambiguous (missing location OR experience type)
+- Never say you don't have venue data \u2014 always search
+- Keep any non-recommendation text under 40 words
+- Use the emoji format above consistently \u2014 no bullets, no numbered lists, no other formatting
+- Never mention Claude or that you are an AI \u2014 you are LiLo's concierge`;
 
     try {
         const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -71,7 +79,7 @@ RULES:
             },
             body: JSON.stringify({
                 model: 'claude-sonnet-4-20250514',
-                max_tokens: 300,
+                max_tokens: 500,
                 system: systemPrompt,
                 tools: [
                     {
@@ -95,31 +103,17 @@ RULES:
         const textBlocks = (data.content || []).filter(b => b.type === 'text');
         const text = textBlocks.map(b => b.text).join('\n\n');
 
-        // If model wants to use a tool, we need to handle the tool loop
         if (data.stop_reason === 'tool_use') {
-            // Continue the conversation with tool results
-            const toolUseBlocks = data.content.filter(b => b.type === 'tool_use');
-
-            // For web_search, the API handles it server-side and returns results
-            // But if we get tool_use stop_reason, we need to send back tool results
-            // With web_search_20250305, the search is handled by the API itself
-            // and results come back in the response. If we get end_turn, text is final.
-
-            // The web search tool is connector-based — the API executes it.
-            // If stop_reason is still tool_use, return what we have.
             if (text) {
                 return res.status(200).json({ content: [{ type: 'text', text }] });
             }
-
-            // If no text yet, the model is mid-search. Return a placeholder.
             return res.status(200).json({
                 content: [{ type: 'text', text: 'Searching for the best options for you...' }]
             });
         }
 
-        // Return normalized response with just text
         return res.status(200).json({
-            content: [{ type: 'text', text: text || 'I couldn\'t find a response. Could you try rephrasing?' }]
+            content: [{ type: 'text', text: text || "I couldn't find a response. Could you try rephrasing?" }]
         });
     } catch (err) {
         return res.status(500).json({ error: 'Failed to reach the search service. Please try again.' });
