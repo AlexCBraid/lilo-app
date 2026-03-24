@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiLo — The World's Most Curated Wellness Platform</title>
+    <meta name="description" content="AI-powered wellness discovery. Find the perfect luxury retreat, urban wellness experience, or health practitioner — uniquely matched to you.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #2C4A3E;
+            --green-light: #3A6355;
+            --green-dark: #1E342B;
+            --gold: #C9A96E;
+            --gold-light: #D4BA88;
+            --cream: #FAF8F5;
+            --cream-dark: #F2EDE6;
+            --white: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #6B6B6B;
+            --text-light: #9A9A9A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background-color: var(--cream);
+            line-height: 1.6;
+        }
+
+        /* ── Typography ─────────────────────────── */
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        /* ── Navigation ─────────────────────────── */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(250, 248, 245, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(44, 74, 62, 0.08);
+            padding: 0.875rem 2rem;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.625rem;
+            font-weight: 600;
+            color: var(--green);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+        }
+
+        .nav-cta {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--green);
+            text-decoration: none;
+            padding: 0.625rem 1.5rem;
+            border: 1.5px solid var(--green);
+            border-radius: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta:hover {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        /* ── Hero ────────────────────────────────── */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(44, 74, 62, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: var(--white);
+            border: 1px solid rgba(44, 74, 62, 0.1);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .hero-wordmark {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 600;
+            color: var(--green);
+            letter-spacing: 0.06em;
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero-tagline {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(1rem, 2.5vw, 1.375rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold);
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            max-width: 580px;
+            font-size: 1.0625rem;
+            line-height: 1.75;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 3.5rem;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--green);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .hero-cta:hover {
+            background: var(--green-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(44, 74, 62, 0.2);
+        }
+
+        .hero-cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(3px);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.6875rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .hero-scroll .line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--text-light), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        /* ── Section shared ──────────────────────── */
+
+        section {
+            padding: 7rem 2rem;
+        }
+
+        .section-label {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.25rem;
+        }
+
+        .section-heading {
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.2;
+            color: var(--green-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-subheading {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 560px;
+        }
+
+        /* ── How It Works ────────────────────────── */
+
+        .how-it-works {
+            background: var(--white);
+        }
+
+        .how-it-works .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .how-it-works .header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .how-it-works .header .section-subheading {
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 3rem;
+            left: calc(16.67% + 1.5rem);
+            right: calc(16.67% + 1.5rem);
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--cream);
+            border: 1.5px solid var(--gold-light);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gold);
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin: 0 auto 1.25rem;
+            color: var(--green);
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            color: var(--green-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .step p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.65;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* ── Experiences ─────────────────────────── */
+
+        .experiences {
+            background: var(--cream);
+        }
+
+        .experiences .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .experiences .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .experiences .header .section-subheading {
+            margin: 0 auto;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1.25rem;
+        }
+
+        .experience-card {
+            background: var(--white);
+            border: 1px solid rgba(44, 74, 62, 0.06);
+            border-radius: 16px;
+            padding: 2.25rem 1.5rem;
+            text-align: center;
+            transition: all 0.35s ease;
+            cursor: default;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(44, 74, 62, 0.08);
+            border-color: rgba(201, 169, 110, 0.25);
+        }
+
+        .experience-card .icon {
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: var(--cream);
+            color: var(--green);
+        }
+
+        .experience-card .icon svg {
+            width: 1.375rem;
+            height: 1.375rem;
+        }
+
+        .experience-card h4 {
+            font-size: 1.0625rem;
+            color: var(--green-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-card p {
+            font-size: 0.8125rem;
+            color: var(--text-light);
+            font-weight: 400;
+            line-height: 1.55;
+        }
+
+        /* ── Waitlist ────────────────────────────── */
+
+        .waitlist {
+            background: var(--green);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .waitlist::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -25%;
+            width: 150%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(201, 169, 110, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .waitlist .container {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .waitlist .section-label {
+            color: var(--gold-light);
+        }
+
+        .waitlist .section-heading {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .waitlist .section-subheading {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0 auto 3rem;
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 480px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .waitlist-form input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9375rem;
+            font-weight: 400;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .waitlist-form input::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .waitlist-form input:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .waitlist-form button {
+            padding: 1rem 2rem;
+            background: var(--gold);
+            color: var(--green-dark);
+            border: none;
+            border-radius: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .waitlist-form button:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(201, 169, 110, 0.3);
+        }
+
+        .waitlist-note {
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+        }
+
+        /* ── Footer ──────────────────────────────── */
+
+        footer {
+            background: var(--green-dark);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 3.5rem 2rem;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.04em;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.45);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold-light);
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            font-weight: 300;
+        }
+
+        /* ── Animations ──────────────────────────── */
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Mobile ──────────────────────────────── */
+
+        @media (max-width: 900px) {
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                max-width: 360px;
+                margin: 0 auto;
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .experience-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            section {
+                padding: 5rem 1.5rem;
+            }
+
+            nav {
+                padding: 1rem 1.25rem;
+            }
+
+            .hero {
+                padding: 7rem 1.5rem 5rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .waitlist-form {
+                flex-direction: column;
+            }
+
+            .waitlist-form button {
+                width: 100%;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="nav">
+        <a href="#" class="nav-logo">LiLo</a>
+        <a href="#waitlist" class="nav-cta">Get Early Access</a>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">Launching 2026</div>
+        <div class="hero-wordmark">LiLo</div>
+        <div class="hero-tagline">The world's most curated wellness platform</div>
+        <p class="hero-description">
+            An AI-powered platform that finds the perfect luxury wellness retreat,
+            urban wellness experience, or health practitioner — uniquely matched to you.
+        </p>
+        <a href="#waitlist" class="hero-cta">
+            Join the Waitlist
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+        </a>
+        <a href="#how" class="hero-scroll">
+            Discover
+            <span class="line"></span>
+        </a>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how">
+        <div class="container">
+            <div class="header reveal">
+                <div class="section-label">How It Works</div>
+                <h2 class="section-heading">Three steps to your<br>perfect wellness experience</h2>
+                <p class="section-subheading">
+                    No endless scrolling. No generic recommendations. Just a shortlist
+                    of experiences that genuinely fit what you're looking for.
+                </p>
+            </div>
+            <div class="steps">
+                <div class="step reveal">
+                    <div class="step-number">1</div>
+                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                    </svg>
+                    <h3>Tell LiLo what you need</h3>
+                    <p>Share your goals, preferences, and constraints. Whether it's a weekend reset or a month-long transformation — we listen.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">2</div>
+                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                    </svg>
+                    <h3>Get a curated shortlist</h3>
+                    <p>Our AI matches you with hand-vetted experiences from our network. Every recommendation is editorially reviewed.</p>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">3</div>
+                    <svg class="step-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 9v9.75" />
+                    </svg>
+                    <h3>Book directly with the venue</h3>
+                    <p>Found your match? Book directly with the provider. No middlemen, no markups — just a seamless connection.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experiences -->
+    <section class="experiences" id="experiences">
+        <div class="container">
+            <div class="header reveal">
+                <div class="section-label">What We Curate</div>
+                <h2 class="section-heading">Wellness, elevated</h2>
+                <p class="section-subheading">
+                    From world-class retreats to the best practitioners in your city —
+                    we curate the experiences that actually make a difference.
+                </p>
+            </div>
+            <div class="experience-grid">
+                <div class="experience-card reveal">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5a17.92 17.92 0 0 1-8.716-2.247m0 0A8.966 8.966 0 0 1 3 12c0-1.264.26-2.467.73-3.558" />
+                        </svg>
+                    </div>
+                    <h4>Luxury Retreats</h4>
+                    <p>Destination wellness</p>
+                </div>
+                <div class="experience-card reveal">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+                        </svg>
+                    </div>
+                    <h4>Urban Wellness</h4>
+                    <p>City-based experiences</p>
+                </div>
+                <div class="experience-card reveal">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                        </svg>
+                    </div>
+                    <h4>Longevity Clinics</h4>
+                    <p>Science-led health</p>
+                </div>
+                <div class="experience-card reveal">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0 1 12 21 8.25 8.25 0 0 1 6.038 7.048 8.287 8.287 0 0 0 9 9.6a8.983 8.983 0 0 1 3.361-6.867 8.21 8.21 0 0 0 3 2.48Z" />
+                        </svg>
+                    </div>
+                    <h4>Private Fitness</h4>
+                    <p>Elite training</p>
+                </div>
+                <div class="experience-card reveal">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                        </svg>
+                    </div>
+                    <h4>Sleep Experiences</h4>
+                    <p>Rest & recovery</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section class="waitlist" id="waitlist">
+        <div class="container reveal">
+            <div class="section-label">Early Access</div>
+            <h2 class="section-heading">Be the first to experience LiLo</h2>
+            <p class="section-subheading">
+                We're building something special for people who take their
+                wellbeing seriously. Join the waitlist for early access.
+            </p>
+            <form class="waitlist-form" onsubmit="handleSubmit(event)">
+                <input type="email" placeholder="Your email address" required aria-label="Email address">
+                <button type="submit">Join the Waitlist</button>
+            </form>
+            <p class="waitlist-note">No spam. Just an invitation when we're ready for you.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo">LiLo</div>
+            <ul class="footer-links">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="footer-copy">&copy; 2026 LiLo. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        reveals.forEach(el => observer.observe(el));
+
+        // Waitlist form
+        function handleSubmit(e) {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const button = e.target.querySelector('button');
+            const email = input.value;
+
+            button.textContent = 'You\'re In';
+            button.style.background = 'rgba(255,255,255,0.2)';
+            button.style.color = '#fff';
+            button.disabled = true;
+            input.disabled = true;
+            input.value = '';
+            input.placeholder = 'Thank you — we\'ll be in touch';
+        }
+    </script>
+</body>
+</html>
