@@ -88,5 +88,113 @@
     "price": "From £15,000/week",
     "best_for": "Longevity, cellular health, UHNW clientele",
     "url": "https://cliniquellaprairie.com"
+  },
+  {
+    "name": "Pause Studio",
+    "location": "Brentwood, LA",
+    "category": "urban wellness",
+    "description": "Premium cold plunge and sauna studio with a strong community feel. LA's answer to Othership — intimate, design-led, and serious about recovery.",
+    "price": "From £30/session",
+    "best_for": "Cold plunge, sauna, recovery, West LA locals",
+    "url": "https://pausestudio.com"
+  },
+  {
+    "name": "Teddy's Hot House",
+    "location": "Venice, LA",
+    "category": "urban wellness",
+    "description": "Celebrity-favourite bathhouse with cedar saunas, cold plunges, and a rooftop deck. Relaxed Venice energy meets genuine wellness.",
+    "price": "From £35/session",
+    "best_for": "Sauna, cold plunge, social wellness, Venice crowd",
+    "url": "https://teddyshothouse.com"
+  },
+  {
+    "name": "HEIMAT",
+    "location": "Santa Monica, LA",
+    "category": "private fitness",
+    "description": "German-engineered strength facility, members only. Serious training culture in a beautifully designed space.",
+    "price": "Membership from £300/month",
+    "best_for": "Strength training, performance, Santa Monica professionals",
+    "url": "https://heimat.com"
+  },
+  {
+    "name": "DOGPOUND",
+    "location": "West Hollywood, LA",
+    "category": "private fitness",
+    "description": "Elite personal training gym with celebrity clientele. LA's most exclusive training facility — results-driven and unapologetically premium.",
+    "price": "PT sessions from £150",
+    "best_for": "Elite PT, celebrity-level training, high performance",
+    "url": "https://dogpound.com"
+  },
+  {
+    "name": "O-P-E-N",
+    "location": "Venice, LA",
+    "category": "breathwork",
+    "description": "Breathwork, sound baths, and conscious movement in a beautiful Venice space. Community-driven and deeply restorative.",
+    "price": "From £25/session",
+    "best_for": "Breathwork, sound healing, mental reset, Venice",
+    "url": "https://o-p-e-n.com"
+  },
+  {
+    "name": "Next Health",
+    "location": "West Hollywood, LA",
+    "category": "longevity clinic",
+    "description": "Comprehensive biohacking facility — IV drips, cryotherapy, NAD+, and advanced biomarker testing. The go-to for LA's health-optimisation crowd.",
+    "price": "From £100/session",
+    "best_for": "IV therapy, NAD+, biohacking, longevity testing",
+    "url": "https://next-health.com"
+  },
+  {
+    "name": "Surya Spa",
+    "location": "Pacific Palisades, LA",
+    "category": "luxury spa",
+    "description": "Ayurvedic spa set in a private estate. Deeply personalised treatments and a genuinely serene escape from the city.",
+    "price": "From £200/treatment",
+    "best_for": "Ayurvedic treatments, deep relaxation, privacy",
+    "url": "https://suryaspa.com"
+  },
+  {
+    "name": "Tomoko Spa",
+    "location": "Beverly Hills, LA",
+    "category": "luxury spa",
+    "description": "Japanese-inspired spa with private soaking tubs. Understated, serene luxury in the heart of Beverly Hills.",
+    "price": "From £150/session",
+    "best_for": "Private soaking, Japanese treatments, couples",
+    "url": "https://tomokospa.com"
+  },
+  {
+    "name": "Sensei Porcupine Creek",
+    "location": "Rancho Mirage, CA",
+    "category": "luxury retreat",
+    "description": "Larry Ellison-backed private wellness estate in the desert. Hyper-personalised programmes, UHNW clientele, and extraordinary facilities.",
+    "price": "From £2,000/night",
+    "best_for": "Ultra-luxury escape, personalised wellness, desert retreat",
+    "url": "https://sensei.com"
+  },
+  {
+    "name": "Ojai Valley Inn",
+    "location": "Ojai, CA",
+    "category": "luxury retreat",
+    "description": "World-class spa resort 90 minutes from LA. Artist commune energy meets five-star wellness — one of Southern California's finest escapes.",
+    "price": "From £500/night",
+    "best_for": "Weekend escapes, spa, couples, nature immersion",
+    "url": "https://ojaivalleyinn.com"
+  },
+  {
+    "name": "Rafi Lounge",
+    "location": "Malibu, LA",
+    "category": "urban wellness",
+    "description": "Outdoor cold plunge and sauna with ocean views, meditation, and a deeply Malibu sensibility. One of the most beautiful wellness settings in LA.",
+    "price": "From £40/session",
+    "best_for": "Cold plunge, ocean views, meditation, Malibu",
+    "url": "https://rafilounge.com"
+  },
+  {
+    "name": "Upgrade Labs",
+    "location": "Santa Monica, LA",
+    "category": "longevity clinic",
+    "description": "Dave Asprey's biohacking facility — red light therapy, cryotherapy, PEMF, and brain training. Science-led and results-focused.",
+    "price": "From £50/session",
+    "best_for": "Biohacking, red light, brain training, longevity",
+    "url": "https://upgradelabs.com"
   }
 ]
