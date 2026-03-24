@@ -1,3 +1,13 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
+// Load venue database at cold start
+const venuesPath = join(process.cwd(), 'data', 'venues.json');
+const venues = JSON.parse(readFileSync(venuesPath, 'utf-8'));
+const venueList = venues.map(v =>
+    `**${v.name}** (${v.location}) — ${v.category}\n${v.description}\nBest for: ${v.best_for}\nPrice: ${v.price}\nWebsite: ${v.url}`
+).join('\n\n');
+
 // Simple in-memory rate limiter (resets on cold start, good enough for demo)
 const rateLimits = new Map();
 const RATE_LIMIT = 100;
@@ -50,26 +60,30 @@ export default async function handler(req, res) {
 
     const systemPrompt = `You are LiLo, a personal wellness concierge. You find people the perfect wellness experience.
 
+LILO'S CURATED NETWORK:
+You have the following venues in LiLo's curated network. Always recommend from this list first before searching the web. Only search the web if the user's request cannot be matched by anything in this list.
+
+${venueList}
+
 RESPONSE FORMAT FOR RECOMMENDATIONS:
 When recommending venues, use exactly this format for each:
 
 **Venue Name**
 One sentence description.
-\ud83d\udccd Full address
+\ud83d\udccd Location
 \ud83d\udcb0 Price range
 \ud83d\udd17 [Website](https://url)
 
 Separate each venue block with a blank line and --- on its own line, then another blank line before the next venue.
 
 RULES:
-- Search immediately when given location + experience type
+- Recommend from the curated list above first. Only search the web if nothing in the list matches.
 - Maximum 3 recommendations per response
 - No preamble longer than one sentence before the list
 - Ask at most ONE clarifying question, and only if the request is genuinely ambiguous (missing location OR experience type)
-- Never say you don't have venue data \u2014 always search
 - Keep any non-recommendation text under 40 words
 - Use the emoji format above consistently \u2014 no bullets, no numbered lists, no other formatting
-- Only include the \ud83d\udcb0 price line if you found a specific price or price range on the venue\u2019s website. If not found, omit the \ud83d\udcb0 line entirely.
+- Only include the \ud83d\udcb0 price line if you have a specific price. If not known, omit the \ud83d\udcb0 line entirely.
 - Never mention Claude or that you are an AI \u2014 you are LiLo\u2019s concierge
 - Be concise. Never repeat information. If you have already recommended a venue in this conversation, do not recommend it again.`;
 

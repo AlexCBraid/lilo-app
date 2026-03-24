@@ -1,0 +1,92 @@
+[
+  {
+    "name": "SHA Wellness Clinic",
+    "location": "Alicante, Spain",
+    "category": "luxury retreat",
+    "description": "Medical-led longevity and detox retreats. Gold standard for complete resets combining Western medicine with Eastern philosophy.",
+    "price": "From £4,000/week",
+    "best_for": "Full detox, longevity programmes, serious health resets",
+    "url": "https://shawellnessclinic.com"
+  },
+  {
+    "name": "Six Senses Ibiza",
+    "location": "Ibiza, Spain",
+    "category": "luxury retreat",
+    "description": "Yoga, sleep programmes, biohacking and longevity treatments in a stunning clifftop setting.",
+    "price": "From £1,500/night",
+    "best_for": "Combining luxury with serious wellness, sleep optimisation",
+    "url": "https://sixsenses.com/ibiza"
+  },
+  {
+    "name": "Lanserhof Tegernsee",
+    "location": "Bavaria, Germany",
+    "category": "medical retreat",
+    "description": "The gold standard for medical detox and gut health. Intense, clinical, and genuinely life-changing.",
+    "price": "From £5,000/week",
+    "best_for": "Gut health, serious medical detox, CEO-level burnout recovery",
+    "url": "https://lanserhof.com"
+  },
+  {
+    "name": "Bamford Wellness Spa",
+    "location": "Cotswolds, UK",
+    "category": "luxury retreat",
+    "description": "Quintessentially British, deeply restorative. Organic, grounded, beautiful countryside setting.",
+    "price": "From £400/day",
+    "best_for": "Weekend escapes, organic wellness, couples retreats",
+    "url": "https://bamford.com"
+  },
+  {
+    "name": "Vivamayr",
+    "location": "Austria",
+    "category": "medical retreat",
+    "description": "Medical fasting and gut health. Clinical but life-changing. Favoured by athletes and executives.",
+    "price": "From £4,500/week",
+    "best_for": "Medical fasting, gut reset, weight management",
+    "url": "https://viva-mayr.com"
+  },
+  {
+    "name": "Remedy Place",
+    "location": "London, UK",
+    "category": "urban wellness",
+    "description": "Premium urban wellness club with ice baths, IV drips, infrared saunas, and breathwork.",
+    "price": "From £30/session, membership available",
+    "best_for": "London-based recovery, cold plunge, social wellness",
+    "url": "https://remedyplace.com"
+  },
+  {
+    "name": "Othership",
+    "location": "London, UK",
+    "category": "urban wellness",
+    "description": "Community-driven sauna and cold plunge with guided breathwork sessions. Energising and social.",
+    "price": "From £30/session",
+    "best_for": "Cold plunge, breathwork, meeting like-minded people",
+    "url": "https://www.othership.us"
+  },
+  {
+    "name": "BodySpace",
+    "location": "London, UK",
+    "category": "private fitness",
+    "description": "Members-only private gym with elite personal trainers. No crowds, no egos.",
+    "price": "Membership from £500/month",
+    "best_for": "High performance training, privacy, elite coaching",
+    "url": "https://bodyspacefitness.com"
+  },
+  {
+    "name": "The Yard Gym",
+    "location": "London, UK",
+    "category": "private fitness",
+    "description": "Premium fitness facility combining serious training with a premium hospitality feel.",
+    "price": "From £200/month",
+    "best_for": "Strength training, London professionals",
+    "url": "https://theyardgym.com"
+  },
+  {
+    "name": "Clinique La Prairie",
+    "location": "Montreux, Switzerland",
+    "category": "longevity clinic",
+    "description": "The world's most prestigious longevity clinic. Pioneering cellular health and anti-ageing programmes since 1931.",
+    "price": "From £15,000/week",
+    "best_for": "Longevity, cellular health, UHNW clientele",
+    "url": "https://cliniquellaprairie.com"
+  }
+]
