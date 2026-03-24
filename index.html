@@ -535,6 +535,33 @@
             font-weight: 300;
         }
 
+        .waitlist-success {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .waitlist-success h3 {
+            font-size: 1.5rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .waitlist-success p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+        }
+
+        .waitlist-form button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .waitlist-error {
+            font-size: 0.8125rem;
+            color: #F5A623;
+            margin-top: 0.75rem;
+        }
+
         /* ── Footer ──────────────────────────────── */
 
         footer {
@@ -813,11 +840,15 @@
                 We're building something special for people who take their
                 wellbeing seriously. Join the waitlist for early access.
             </p>
-            <form class="waitlist-form" onsubmit="handleSubmit(event)">
-                <input type="email" placeholder="Your email address" required aria-label="Email address">
-                <button type="submit">Join the Waitlist</button>
-            </form>
-            <p class="waitlist-note">No spam. Just an invitation when we're ready for you.</p>
+            <!-- ⚠️  REPLACE_WITH_FORMSPREE_ID: Change mnjoaqpa below to your real Formspree form ID.
+                 Setup (2 min): Go to https://formspree.io → Sign up free → New Form → copy the 8-char ID from the endpoint URL. -->
+            <div id="waitlist-container">
+                <form class="waitlist-form" id="waitlist-form">
+                    <input type="email" name="email" placeholder="Your email address" required aria-label="Email address">
+                    <button type="submit">Join the Waitlist</button>
+                </form>
+                <p class="waitlist-note">No spam. Just an invitation when we're ready for you.</p>
+            </div>
         </div>
     </section>
 
@@ -856,21 +887,49 @@
 
         reveals.forEach(el => observer.observe(el));
 
-        // Waitlist form
-        function handleSubmit(e) {
+        // Waitlist form — submits to Formspree
+        const waitlistForm = document.getElementById('waitlist-form');
+        const waitlistContainer = document.getElementById('waitlist-container');
+
+        waitlistForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const input = e.target.querySelector('input');
-            const button = e.target.querySelector('button');
+            const button = waitlistForm.querySelector('button');
+            const input = waitlistForm.querySelector('input');
             const email = input.value;
 
-            button.textContent = 'You\'re In';
-            button.style.background = 'rgba(255,255,255,0.2)';
-            button.style.color = '#fff';
+            // Disable form while submitting
             button.disabled = true;
-            input.disabled = true;
-            input.value = '';
-            input.placeholder = 'Thank you — we\'ll be in touch';
-        }
+            button.textContent = 'Sending…';
+
+            try {
+                // ⚠️  REPLACE_WITH_FORMSPREE_ID: Change mnjoaqpa to your Formspree form ID
+                const res = await fetch('https://formspree.io/f/mnjoaqpa', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                if (res.ok) {
+                    waitlistContainer.innerHTML = `
+                        <div class="waitlist-success">
+                            <h3>You're in — we'll be in touch soon.</h3>
+                            <p>We'll let you know the moment LiLo is ready for you.</p>
+                        </div>`;
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (err) {
+                button.disabled = false;
+                button.textContent = 'Join the Waitlist';
+                // Remove any existing error before adding a new one
+                const existing = waitlistContainer.querySelector('.waitlist-error');
+                if (existing) existing.remove();
+                const errorEl = document.createElement('p');
+                errorEl.className = 'waitlist-error';
+                errorEl.textContent = 'Something went wrong — please try again.';
+                waitlistContainer.appendChild(errorEl);
+            }
+        });
     </script>
 </body>
 </html>
