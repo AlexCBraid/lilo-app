@@ -39,8 +39,6 @@
             flex-direction: column;
         }
 
-        /* ── Header ──────────────────────────────── */
-
         .chat-header {
             display: flex;
             align-items: center;
@@ -81,11 +79,7 @@
             transition: color 0.15s ease;
         }
 
-        .chat-header-back:hover {
-            color: var(--green);
-        }
-
-        /* ── Chat area ───────────────────────────── */
+        .chat-header-back:hover { color: var(--green); }
 
         .chat-body {
             flex: 1;
@@ -135,13 +129,15 @@
             border-bottom-left-radius: 4px;
         }
 
+        .message-assistant .message-bubble strong { color: var(--green-dark); font-weight: 600; }
+        .message-assistant .message-bubble a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
+        .message-assistant .message-bubble a:hover { color: var(--green-dark); }
+
         .message-user .message-bubble {
             background: var(--green);
             color: var(--white);
             border-bottom-right-radius: 4px;
         }
-
-        /* ── Typing indicator ────────────────────── */
 
         .typing-indicator { align-self: flex-start; animation: messageIn 0.4s var(--ease-out); }
 
@@ -174,8 +170,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ── Input area ──────────────────────────── */
-
         .chat-input-area {
             padding: 1.25rem 2rem 1.5rem;
             border-top: 1px solid rgba(44, 74, 62, 0.08);
@@ -198,7 +192,6 @@
             background: var(--cream);
             font-family: 'Inter', sans-serif;
             font-size: 0.9375rem;
-            font-weight: 400;
             color: var(--text-primary);
             outline: none;
             transition: border-color 0.15s ease;
@@ -226,8 +219,6 @@
         .chat-send:hover { background: var(--green-dark); }
         .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* ── Error banner ────────────────────────── */
-
         .error-banner {
             background: #fef3f2;
             border: 1px solid #fecaca;
@@ -237,8 +228,6 @@
             text-align: center;
             display: none;
         }
-
-        /* ── Mobile ──────────────────────────────── */
 
         @media (max-width: 640px) {
             .chat-header { padding: 0.875rem 1.25rem; }
@@ -251,7 +240,6 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header class="chat-header">
         <div class="chat-header-logo">LiLo</div>
         <div class="chat-header-label">Concierge — Private Beta</div>
@@ -260,15 +248,13 @@
 
     <div class="error-banner" id="error-banner"></div>
 
-    <!-- Chat -->
     <div class="chat-body" id="chat-body">
         <div class="message message-assistant">
             <div class="message-sender">LiLo</div>
-            <div class="message-bubble">Welcome. I'm here to help you find the right wellness experience. Tell me what you're looking for — a retreat, an urban escape, a practitioner — and I'll find your match.</div>
+            <div class="message-bubble">Welcome. Tell me what you're looking for — a retreat, an urban wellness experience, a practitioner — and I'll find real options for you.</div>
         </div>
     </div>
 
-    <!-- Input -->
     <div class="chat-input-area">
         <form class="chat-input-form" id="chat-form">
             <input type="text" class="chat-input" id="chat-input" placeholder="Tell LiLo what you're looking for..." autocomplete="off">
@@ -277,7 +263,9 @@
     </div>
 
     <script>
+        const MAX_MESSAGES = 10;
         const messages = [];
+        let messageCount = 0;
         const chatBody = document.getElementById('chat-body');
         const chatForm = document.getElementById('chat-form');
         const chatInput = document.getElementById('chat-input');
@@ -286,10 +274,36 @@
 
         chatInput.focus();
 
+        // Lightweight markdown: **bold**, [text](url), and newlines
+        function renderMarkdown(text) {
+            let html = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+            // Bold
+            html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            // Links
+            html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+            // Bare URLs
+            html = html.replace(/(^|[\s(])(https?:\/\/[^\s)<]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+            // Line breaks
+            html = html.replace(/\n/g, '<br>');
+            return html;
+        }
+
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = chatInput.value.trim();
             if (!text) return;
+
+            messageCount++;
+
+            if (messageCount > MAX_MESSAGES) {
+                appendMessage('assistant', "Thanks for trying LiLo! You've reached the limit for this demo session. [Join the waitlist for full access](/#waitlist) \u2014 we'd love to have you.");
+                chatInput.disabled = true;
+                chatSend.disabled = true;
+                return;
+            }
 
             appendMessage('user', text);
             messages.push({ role: 'user', content: text });
@@ -311,13 +325,19 @@
 
                 if (!res.ok) {
                     const err = await res.json().catch(() => ({}));
-                    throw new Error(err.error || `Server error ${res.status}`);
+                    throw new Error(err.error || 'Something went wrong');
                 }
 
                 const data = await res.json();
                 const reply = data.content[0].text;
                 appendMessage('assistant', reply);
                 messages.push({ role: 'assistant', content: reply });
+
+                if (data._limit_reached) {
+                    chatInput.disabled = true;
+                    chatSend.disabled = true;
+                    return;
+                }
             } catch (err) {
                 removeTyping(typing);
                 errorBanner.textContent = err.message;
@@ -339,7 +359,11 @@
 
             const bubble = document.createElement('div');
             bubble.className = 'message-bubble';
-            bubble.textContent = text;
+            if (role === 'assistant') {
+                bubble.innerHTML = renderMarkdown(text);
+            } else {
+                bubble.textContent = text;
+            }
 
             wrapper.appendChild(sender);
             wrapper.appendChild(bubble);
