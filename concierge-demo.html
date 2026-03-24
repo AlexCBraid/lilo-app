@@ -134,11 +134,20 @@
         .message-assistant .message-bubble strong { color: var(--green-dark); font-weight: 600; }
         .message-assistant .message-bubble a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
         .message-assistant .message-bubble a:hover { color: var(--green-dark); }
-        .message-assistant .message-bubble p { margin: 0 0 0.5rem; }
+        .message-assistant .message-bubble p { margin: 0 0 0.25rem; }
         .message-assistant .message-bubble p:last-child { margin-bottom: 0; }
         .message-assistant .message-bubble ul,
         .message-assistant .message-bubble ol { margin: 0.25rem 0 0.5rem 1.25rem; padding: 0; }
         .message-assistant .message-bubble li { margin-bottom: 0.25rem; }
+        .message-assistant .message-bubble hr {
+            border: none;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            margin: 1rem 0;
+        }
+        .message-assistant .message-bubble strong {
+            display: inline-block;
+            margin-top: 0.25rem;
+        }
 
         .message-user .message-bubble {
             background: var(--green);
@@ -248,7 +257,7 @@
 <body>
 
     <header class="chat-header">
-        <div class="chat-header-logo">LiLo</div>
+        <a href="/" class="chat-header-logo" style="text-decoration:none;">LiLo</a>
         <div class="chat-header-label">Concierge — Private Beta</div>
         <a href="/" class="chat-header-back">Back</a>
     </header>
@@ -293,7 +302,7 @@
             const raw = marked.parse(text);
             return DOMPurify.sanitize(raw, {
                 ADD_ATTR: ['target', 'rel'],
-                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'code', 'pre']
+                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'code', 'pre', 'hr']
             });
         }
 

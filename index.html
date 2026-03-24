@@ -721,11 +721,20 @@
         .lc-message-assistant .lc-bubble strong { color: var(--green-dark); font-weight: 600; }
         .lc-message-assistant .lc-bubble a { color: var(--green); text-decoration: underline; text-underline-offset: 2px; }
         .lc-message-assistant .lc-bubble a:hover { color: var(--green-dark); }
-        .lc-message-assistant .lc-bubble p { margin: 0 0 0.4rem; }
+        .lc-message-assistant .lc-bubble p { margin: 0 0 0.25rem; }
         .lc-message-assistant .lc-bubble p:last-child { margin-bottom: 0; }
         .lc-message-assistant .lc-bubble ul,
         .lc-message-assistant .lc-bubble ol { margin: 0.25rem 0 0.4rem 1.25rem; padding: 0; }
         .lc-message-assistant .lc-bubble li { margin-bottom: 0.2rem; }
+        .lc-message-assistant .lc-bubble hr {
+            border: none;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            margin: 0.875rem 0;
+        }
+        .lc-message-assistant .lc-bubble strong {
+            display: inline-block;
+            margin-top: 0.25rem;
+        }
 
         .lc-message-user .lc-bubble {
             background: var(--green);
@@ -1418,7 +1427,7 @@
             const raw = marked.parse(text);
             return DOMPurify.sanitize(raw, {
                 ADD_ATTR: ['target', 'rel'],
-                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'code', 'pre']
+                ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'a', 'ul', 'ol', 'li', 'code', 'pre', 'hr']
             });
         }
 
